@@ -16,6 +16,7 @@
   }
 }
 
+/* sets text color to white and bg to black in dark mode, black/white otherwise*/
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
