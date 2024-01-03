@@ -16,12 +16,12 @@ export default function NavBar() {
     ])
 
     return (
-        <div className="w-1/5 flex flex-col space-y-5 bg-green-400">
+        <nav className="w-1/5 flex flex-col space-y-5 bg-green-400">
             {
                 links.map((value, index) => {
                     return <p key={index+1}>Section {index+1}: {value}</p>
                 })
             }
-        </div>
+        </nav>
     )
 }

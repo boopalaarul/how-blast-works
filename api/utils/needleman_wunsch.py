@@ -13,7 +13,9 @@ def generate_needleman_wunsch(strings, match_weight, mis_weight, gap_weight):
     Parameters
     ----------
     strings : list
-        List of two strings for global alignment.
+        List of two strings for global alignment. The first string will be represented by
+        the rows of the resulting matrices, and the second string will be represented by
+        the columns.
     match_weight : int
         Score bonus for a match between two positions in the strings. Must be >= 0.
     mis_weight: int
@@ -65,44 +67,40 @@ def generate_needleman_wunsch(strings, match_weight, mis_weight, gap_weight):
 
 #this isn't right, i should already have the recursive alg for backtracing multiple alignments
 #or wait... i think i made that for smith-waterman and then it got eaten lmao
-def find_all_matches(strings, match_weight, mis_weight, gap_weight):
-    strings.sort(key=len)
-    a, b = strings
-    score, point = generate_needleman_wunsch(strings, match_weight, mis_weight, gap_weight)
-
-    array_shape = np.shape(score)
+def find_all_matches(strings, score_matrix, direction_matrix):
+    
     #coordinates of last cell in score array
-    max_i = array_shape[0] - 1
-    max_j = array_shape[1] - 1
-    match_string = ""
-    non_match_string = ""
+    max_i = np.shape(score_matrix)[0] - 1
+    max_j = np.shape(score_matrix)[1] - 1
+    
+    #axes of the score, direction matrices are 1 unit longer than original strings,
+    #because score/direction matrices have the "gap insert" character prepending string
+    #can adjust strings to compensate for this
+    a = "_" + strings[0]
+    b = "_" + strings[1]
 
-    while max_i > 0 or max_j > 0:
+    #have a recusive traverser method going here, spawns one or two child calls
+    #base case should return the entire alignment (base case is of course reaching)
+    #i = 0 or j = 0
+    #as child calls return their parents should return lists of lists, final result
+    #should be an n x 2 list of lists
+    def backtrace(i, j, alignment_a, alignment_b):
+        #base case: (i, j) = (0, 0)
+        if i == 0 and j == 0:
+            #return list of lists, for easier concatenation
+            return [[alignment_a, alignment_b]]
+        
+        results = []
         #match or mismatch
-        if point[max_i, max_j][0] == DIAG_EDGE:
-            #only record the matches in match_string
-            if a[max_i-1] == b[max_j-1]:
-                match_string = a[max_i-1] + match_string
-            else:
-                non_match_string = b[max_j-1] + non_match_string
-            #continue to next loop, last cell of new array = S[i-1, j-1]
-            max_i = max_i - 1
-            max_j = max_j - 1
-            continue
-
-        #gap in a
-        elif point[max_i, max_j][1] == RIGHT_EDGE:
-            non_match_string = b[max_j-1] + non_match_string
-            #continue to next loop, new last cell = S[i, j-1]
-            max_j = max_j - 1
-            continue
-
-        #gap in b
-        elif point[max_i, max_j][2] == DOWN_EDGE:
-            #continue to next loop, new last cell = S[i-1, j]
-            max_i = max_i - 1
-            continue
-        #above 3 cases should handle everything, this assert should never be triggered
-        print(max_i, max_j)
-        assert(False)
-    return match_string, non_match_string
+        if direction_matrix[i, j][0] == DIAG_EDGE:
+            results = results + backtrace(i-1, j-1, a[i] + alignment_a, b[j] + alignment_b)
+        #gap in a: shift column, don't shift row ("consume" character in b, insert gap in a)
+        if direction_matrix[i, j][1] == RIGHT_EDGE:
+            #new last cell = S[i, j-1]
+            results = results + backtrace(i, j-1, "_" + alignment_a, b[j] + alignment_b)        #gap in b
+        #gap in b: shift row, don't shift column; new cell = S[i-1, j]
+        if direction_matrix[i, j][2] == DOWN_EDGE:
+            results = results + backtrace(i-1, j, a[i] + alignment_a, "_" + alignment_b)
+        return results
+    
+    return backtrace(max_i, max_j, "", "")

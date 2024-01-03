@@ -1,10 +1,13 @@
 export const dynamic = 'force-dynamic' // defaults to auto
-export async function GET(request: Request) {
-    //convert string to URL object, extract parameters
-    const { searchParams } = new URL(request.url)
-    const string_a = searchParams.get('stringA')
-    const string_b = searchParams.get('stringB')
-    console.log(string_a, string_b)
-    const response = await fetch(`http://localhost:5000/nw/${string_a}/${string_b}`)
-    return new Response(JSON.stringify({stringA : string_a, stringB : string_b}))
+export async function POST(request: Request) {
+    //extract parameters from request body
+    const reqBody = await request.json();
+    const response = await fetch("http://localhost:5000/nw/", 
+                                {method : "POST", 
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body : JSON.stringify(reqBody)})
+    const data = await response.json();
+    return new Response(JSON.stringify(data))
 }
