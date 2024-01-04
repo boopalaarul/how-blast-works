@@ -16,7 +16,7 @@ export default function Header( {children} : {children: any} ) {
             </div>
             <div className="flex flex-row h-dvh">
                 {navbarVisible ? <NavBar/> : null}
-                <div className="grow">
+                <div>
                     {children}
                 </div>
             </div>
