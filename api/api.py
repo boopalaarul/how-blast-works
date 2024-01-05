@@ -49,7 +49,8 @@ def get_global_alignments():
     #first thing is to just make the other api log these, then can figure out how to
     #disassemble/contain within components
     return ({
-        "score_matrix": json.dumps(score_nested_list), 
-        "direction_matrix": json.dumps(direction_nested_list),
+        "input_form" : json.dumps(parameters),
+        "score_matrix" : json.dumps(score_nested_list), 
+        "direction_matrix" : json.dumps(direction_nested_list),
         "alignments" : json.dumps(alignments)
     })

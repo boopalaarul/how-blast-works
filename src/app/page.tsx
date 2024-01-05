@@ -1,13 +1,12 @@
-"use client"
-
 import Header from "@/ui-components/app-header";
-import AlignmentGrid from "@/ui-components/alignment-grid";
-
+import AlignmentSandbox from "@/ui-components/alignment-sandbox";
+import AlignmentFromPreset from "@/ui-components/alignment-preset";
 export default function Home() {
 
   return (
     <Header>
-      <AlignmentGrid/>
+      <AlignmentFromPreset filename="1-1-preset" />
+      <AlignmentSandbox />
     </Header>
   )
 }

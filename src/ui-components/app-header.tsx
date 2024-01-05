@@ -1,3 +1,4 @@
+"use client"
 //want to treat this as an extensible template for a number of different pages: means 
 //we have to have a children prop
 import { useState } from "react";
@@ -14,7 +15,7 @@ export default function Header( {children} : {children: any} ) {
                 <h1 className="grow text-3xl text-center">How BLAST Works</h1>
                 <p>[Github icon]</p>
             </div>
-            <div className="flex flex-row h-dvh">
+            <div className="flex flex-row h-full">
                 {navbarVisible ? <NavBar/> : null}
                 <div>
                     {children}
