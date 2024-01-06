@@ -1,6 +1,6 @@
 #run with  python -m tests.test_global_alignment from api directory
 #or  pytest tests/ from same
-from utils import needleman_wunsch as nw
+from _utils import needleman_wunsch as nw
 
 strings = ["ATTGAA", "ATGGA"]
 match, mis, gap = 1, -1, -2

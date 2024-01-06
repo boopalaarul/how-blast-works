@@ -37,7 +37,10 @@ export default function PairwiseAlignments ({alignments} : {alignments : Alignme
         //storing inputs in a set also eliminates duplicates from input
         //storing reverse of each input as well to make sure either form of user input
         //passes the check
-        const unformatted_input = inputText.split("\n\n")
+        const trimmed_input = inputText.trim()
+        if (trimmed_input === "") return;
+
+        const unformatted_input = trimmed_input.split("\n\n")
         const inputSet = new Set<string>()
         unformatted_input.map((al_string)=>{
             const newAlignment = al_string.split("\n")
@@ -51,7 +54,6 @@ export default function PairwiseAlignments ({alignments} : {alignments : Alignme
         const numInputAlignments = inputSet.size / 2
         let count = 0;
 
-        console.log(inputSet)
         inputSet.forEach((input)=>{
             if(optimalAlignmentSet.has(input)) {
                 //expect count to go up by 2 for each correct answer within input, since inputs
@@ -76,7 +78,6 @@ export default function PairwiseAlignments ({alignments} : {alignments : Alignme
             <div>
                 <button 
                 onClick={checkAlignments}
-                disabled={inputText.length <= 1}
                 className="bg-green-700">Check Alignments</button>
                 <p>{checkResults}</p>
             </div>

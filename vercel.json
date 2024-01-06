@@ -1,8 +1,18 @@
 {
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "api/api.py"
-      }
-    ]
+  "functions" : {
+    "api/api.py" : {
+      "includeFiles": "api/_utils/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/nw",
+      "methods" : ["POST"], 
+      "headers": { 
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+      },
+      "dest": "api/api.py"
+    }
+  ]
 }
