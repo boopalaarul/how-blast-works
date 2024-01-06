@@ -11,6 +11,7 @@ export default function PairwiseAlignments ({alignments} : {alignments : Alignme
 
     function printAlignments () {
 
+        //storing inputs in a set also eliminates duplicates from input
         const unformatted = inputText.split("\n\n")
         const inputSet = new Set<string>()
         unformatted.map((al)=>{

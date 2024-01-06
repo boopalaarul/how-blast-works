@@ -48,3 +48,27 @@ body {
 .button-selected {
   background-color: rgb(107 114 128);
 }
+
+.page-content {
+  padding: 2.5rem;
+}
+
+.page-content > h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.page-content > ul {
+  /*text-indent: 0.5in;*/
+  margin-bottom: 1rem;
+}
+
+.page-content > p {
+  /*text-indent: 0.5in;*/
+  margin-bottom: 1rem;
+}
+
+/* Next's Link element contains a */
+.page-content * a {
+  color: rgb(3, 110, 110);
+}
