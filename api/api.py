@@ -29,7 +29,7 @@ print(nw.generate_needleman_wunsch)
 #here 2) means that error checking is now about checking equality of sets, not a straight
 #"right or wrong"
 
-@app.post('/nw/')
+@app.post('/api/nw/')
 def get_global_alignments():
     """Gives React app the score matrix, direction matrix, and all alignments
     for a given pair of strings and bonus/penalty score weights."""
