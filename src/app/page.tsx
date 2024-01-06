@@ -1,5 +1,6 @@
 import PageFrame from "@/ui-components/page-frame";
 import Link from "next/link";
+import ReadMoreBox from "@/ui-components/read-more-box";
 
 /**
  * Home page of How BLAST Works.
@@ -88,15 +89,14 @@ export default function Home() {
           the query may take several minutes to run.)
         </li>
       </ul>
-      <h2>Read more about...</h2>
-      <ul className="list-disc">
+      <ReadMoreBox>
         <li><Link href="https://www.ncbi.nlm.nih.gov/books/NBK50679/#RefSeqFAQ.what_is_the_difference_between_1">
           NCBI's GenBank archive and curated RefSeq database.</Link></li>
         <li><Link href="https://www.nlm.nih.gov/ncbi/workshops/2023-08_BLAST_evol/blast_basics.html">
           The NIH's BLAST workshop, August 2023.</Link></li>
         <li><Link href="https://ncbiinsights.ncbi.nlm.nih.gov/?s=BLAST">
           Recent news in the NCBI Insights blog.</Link></li>
-      </ul>
+      </ReadMoreBox>
     </PageFrame>
   )
 }

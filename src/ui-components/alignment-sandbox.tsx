@@ -92,8 +92,8 @@ export default function AlignmentSandbox( {} ) {
                 </div>
                 
                 <div className="flex flex-col">
-                    <input type="text" id="stringA" value={formState.stringA} onChange={handleInputChange} />
-                    <input type="text" id="stringB" value={formState.stringB} onChange={handleInputChange} />
+                    <input type="text" id="stringA" maxLength={10} value={formState.stringA} onChange={handleInputChange} />
+                    <input type="text" id="stringB" maxLength={10} value={formState.stringB} onChange={handleInputChange} />
                     <input type="number" min={1} max={5} id="match" value={formState.match} onChange={handleInputChange} />
                     <input type="number" min={-5} max={0} id="mis" value={formState.mis} onChange={handleInputChange} />
                     <input type="number" min={-5} max={0} id="gap" value={formState.gap} onChange={handleInputChange} />

@@ -1,7 +1,14 @@
 import PageFrame from "@/ui-components/page-frame";
 import QuoteBox from "@/ui-components/quote-box";
+import ReadMoreBox from "@/ui-components/read-more-box";
+import Link from "next/link";
 import AlignmentSandbox from "@/ui-components/alignment-sandbox";
 import AlignmentFromPreset from "@/ui-components/alignment-preset";
+
+/**
+ * Component that renders main content of Section 1, as a child of the PageFrame.
+ * @returns Described above.
+ */
 export default function Home() {
 
   return (
@@ -36,7 +43,7 @@ of the proteins, A and B, being compared. " attribution="Needleman and Wunsch, 1
         will depend on the scores of earlier pairs. The final score will be influenced by all the letters
         before it.
       </p>
-      <AlignmentFromPreset filename="section1-twoletter" />
+      <AlignmentFromPreset filename="section1-twoletter" showAlignmentInput={false}/>
       <ul className="list-disc">
         <li>Start at the top left cell of the matrix, and give it a score of 0.</li>
         <li>For the first row, note the '_' character in the row label. This character represents
@@ -93,24 +100,73 @@ of the proteins, A and B, being compared. " attribution="Needleman and Wunsch, 1
       </p>
 
       <h2>Backtracking To Spell Out Optimal Alignments</h2>
-      {/* ok this part's easy just need to finish the PairwiseAlignments and include it in
-      AlignmentFromPreset, then provide instructions
-      just use goran's problem for this*/}
-
-
+      <p>Feel like you've understood the example above? Let's try it with longer strings, and 
+        an additional challenge: using the arrows in the score matrix to backtrace through the 
+        cells, and recover four optimal alignments of the two strings. That's four different ways
+        to overlap these two strings, which all produce the best possible score.
+      </p>
+      <AlignmentFromPreset filename="section1-multipaths" showAlignmentInput={true}/>
+      <p>The Needleman-Wunsch algorithm is a good example of a technique known 
+        as <strong>dynamic programming</strong>. Algorithms of this type tackle a large problem
+        by breaking it into structurally similar subproblems, and then putting the results together
+        into a overall solution. Observe that the algorithm works letter by letter, each cell taking 
+        the optimal solution offered by the earlier cells and adding onto it.</p>
+      <p>Disregarding the arrows in the cells, we could just take the score in the bottom right cell
+        and declare that whatever the optimal alignment of the two strings looks like, it will have
+        this score. But by saving the optimal path, by having each cell point back to the cell it was
+        derived from, we can go back to a completed score matrix and follow the arrows from the bottom 
+        right to the top left.
+      </p>
+      <p>Consider the problem above. Fill out the score matrix, then start at the bottom right cell.
+        This cell represents a pair of matching letters, ('A', 'A'). Whatever optimal alignments we
+        find, all of them will take the form (X + 'A', Y + 'A'), with each of the matching letters
+        appended onto the previous optimal solution. We can find the next letters by following the
+        diagonal arrow (since this is a matching pair) to the previous optimal cell. At some point,
+        the cell we're on will have two arrows pointing to different optimal solutions. Here, copy
+        the alignments you have written so far, and follow each path separately. You may find that
+        they converge again sooner or later, but they are still different solutions to the problem.
+      </p>
+      <p>Since one of the strings in this example is shorter than the other, the optimal global alignments
+        will likely have gaps. Represent gaps with the '_' character, and pay attention to which string
+        the gap is inserted into. Check your answers in the dedicated input.
+      </p>
       <h2>The Sandbox</h2>
+      <QuoteBox quote="One may
+ask whether a particular result found differs significantly from a fortuitous match
+between two random sequences. Ideally,one would prefer to know the exact probability 
+of obtaining the result found from a pair of random sequences and what fraction
+of the total possibilities are less probable..." attribution="Needleman and Wunsch, 1970" />
       <p>As the quote at the start of this page says, Needleman and Wunsch intended their algorithm
         to be used for comparing proteins, not DNA strings. Proteins can be represented as strings
         too, where each character represents one of 20 amino acids. However, the algorithm can be used
         on any string of symbols. Don't believe me? Design your own global alignment problem below.
         The "Generate Blank Matrix" button will update the score matrix within the sandbox, as well
         as the alignment input area.</p> 
+      <AlignmentSandbox />
       <p>Every problem has its own solution, but the "Check Answers" and "Check Alignments" buttons
         will validate the input, using correct answers supplied by an automated implementation of 
         the same algorithm you've been slogging through by hand. As was evident in 1969, computers
         sure are useful.
       </p>
-      <AlignmentSandbox />
+      <p>This brings up an important question, however. If even completely random strings can have
+        at least one optimal alignment, then what do an "optimal alignment" or its corresponding score
+        even mean? If the strings are not random, and there really is some relationship between them 
+        (maybe, for example, they both derive from a common ancestral sequence), can global alignment
+        pick up on that relationship, and give such an alignment a meaningfully different score than
+        it would for any two random strings?
+      </p> 
+      <p>This is an important question to keep in mind for Section
+        3 and beyond, as the "Expect value" or "E-value" returned by BLAST, usually taken as a proxy for
+        "is this the result we wanted", in fact measures the likelihood of a particular score arising
+        from two strings.
+      </p>
+      <ReadMoreBox>
+        <li><Link href="/downloads/needleman-wunsch-paper.pdf">The original paper by Needleman and 
+        Wunsch.</Link> It's very readable, and after describing the algorithm the authors try to find a statistical distribution
+        for global alignment scores from experimental data.</li>
+        <li><Link href="https://www.nlm.nih.gov/ncbi/workshops/2023-08_BLAST_evol/e_value.html">
+          The BLAST Expect value.</Link></li>
+      </ReadMoreBox>
     </PageFrame>
   )
 }
