@@ -8,7 +8,7 @@ Section 1 is currently presentable, and the short term goal is to implement Sect
 
 ![Sandbox GIF](/demo_assets/sandbox.gif)
 
-This app has a React frontend, routing and middleware by Next.js, and a Flask API that runs a Python module implementing the sequence alignment algorithms. User input is supplied from the client to the Flask API by way of a Next.js server API. Presets are stored as static assets (JSON files in /public/json) and are fetched to render some of the elements on each page.
+This app has a React frontend, routing and middleware by Next.js, and a Flask API running as a serverless function that runs a Python module implementing the sequence alignment algorithms. Presets are stored as static assets (JSON files in /public/json) and are fetched to render some of the elements on each page.
 
 ## Other Links
 
