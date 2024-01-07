@@ -1,7 +1,6 @@
 # how-blast-works
 
-Check out the live deployment of this app here, current up to the latest successful build. (let's
-actually deploy it first...)
+[Check out the live deployment of this app here](https://how-blast-works.vercel.app/), current up to the latest successful build.
 
 This project is an instructional website exploring a topic at the intersection of biology and computer science: pairwise sequence alignment. It is a staged introduction to the antecedents and principles of NCBI's BLAST, one of the more popular pairwise sequence alignment tools on the Internet. Reference will also be made to similar tools maintained by the EBI. 
 
